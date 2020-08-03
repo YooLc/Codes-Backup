@@ -1,0 +1,17 @@
+subtasks:
+  - score: 40
+    type: min
+    cases: [1, 2, 3, 4]
+  - score: 30
+    type: min
+    cases: [5, 6, 7]
+  - score: 30
+    type: min
+    cases: [9, 10, 11]
+
+inputFile: 'vector#.in'
+outputFile: 'vector#.out'
+
+specialJudge:
+    language: cpp
+    fileName: spj.cpp

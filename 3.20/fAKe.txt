@@ -1,0 +1,12 @@
+6 7
+ST.....
+....#..
+.......
+....B..
+...#.#.
+...#...
+
+Maze #8
+sseeeeesWWWswNNN
+Maze #8
+sseeeeesesswwnNenWswNNseennwWW
