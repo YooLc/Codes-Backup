@@ -26,6 +26,7 @@ void solve()
             p <<= 1;
         }
         // 剩下的打包成一个物品
+        if (!cc) continue;
         vol[++tot] = vo * lim;
         val[tot] = va * lim;
     }
