@@ -18,8 +18,8 @@ inline void printPath(int cur, int v)
 int main() 
 {
 #ifndef ONLINE_JUDGE
-    freopen("uva624.in", "r", stdin);
-    freopen("uva624.out", "w", stdout);
+    //freopen("uva624.in", "r", stdin);
+    //freopen("uva624.out", "w", stdout);
 #endif
     int n, m;
     while (~scanf("%d %d", &m, &n))
