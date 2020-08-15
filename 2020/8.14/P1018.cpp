@@ -86,7 +86,6 @@ int main()
     scanf("%d %d", &n, &m);
     scanf("%s", a);
     BigNum t(a);
-    BigNum v("1234"), b("1321");
     for (int i = 1; i <= n; ++i) f[i][0] = t.slice(1, i);
     /*
         f[i][j] 表示前 i 位数字有 j 个乘号时，结果的最大值

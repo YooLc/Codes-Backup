@@ -2,7 +2,7 @@
 #include <cstdio>
 #include <cstring>
 using namespace std;
-const int MAXN = 2e2 + 1, MAXM = 21, SHIFT = MAXM * MAXM + 1, INF = 0x3f3f3f3f;
+const int MAXN = 2e2 + 1, MAXM = 21, SHIFT = 425, INF = 0x3f3f3f3f; // 401 本地能过 20 0 数据
 int n, m, d[MAXN], p[MAXN];
 int f[MAXN][MAXM][SHIFT << 1];
 int tot = 0, dsum = 0, psum = 0, ans[MAXM];
@@ -65,3 +65,26 @@ int main()
     for (int i = tot; i >= 1; --i) printf("%d ", ans[i]);
     return 0;
 }
+/*
+20 20
+20 0
+20 0
+20 0
+20 0
+20 0
+20 0
+20 0
+20 0
+20 0
+20 0
+20 0
+20 0
+20 0
+20 0
+20 0
+20 0
+20 0
+20 0
+20 0
+20 0
+*/
