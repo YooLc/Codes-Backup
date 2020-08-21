@@ -101,7 +101,6 @@ int main()
     n = rd(); m = rd(); T = rd(); k = rd();
     for (int i = 1; i <= n; ++i) val[i] = rd();
     if (T <= 52501) { subtask1::solve(); return 0; }
-    
     subtask2::solve();
     return 0;
 }
