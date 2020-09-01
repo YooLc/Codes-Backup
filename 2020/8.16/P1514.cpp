@@ -1,28 +1,19 @@
 #include <iostream>
 #include <cstdio>
-#include <queue>
-using namespace std;
-inline int rd()
+#include <cstring>
+const int MAXN = 501, dx[4] = {0, 0, 1, -1}, dy[4] = {1, -1, 0, 0};
+int r, c, ans, h[MAXN][MAXN], left[MAXN][MAXN], right[MAXN][MAXN];
+bool vis[MAXN][MAXN];
+void check(int tx, int ty)
 {
-    int t = 0, f = 1; char ch = getchar();
-    while (!(ch >= '0' && ch <= '9')) { if (ch == '-') f = -1; ch = getchar(); }
-    while (ch >= '0' && ch <= '9') { t = t * 10 + ch - '0'; ch = getchar(); }
-    return t * f;
-}
-const int MAXN = 5e2 + 5, MAXM = 5e2 + 5;
-int n, m, a[MAXN][MAXM], f[MAXN][MAXM], cur = 0;
-int dx[4] = {0, 0, 1, -1}, dy[4] = {-1, 1, 0, 0};
-bool vis[MAXM];
-void dfs(int curx, int cury, int id)
-{
-    f[curx][cury] = id;
     for (int i = 0; i < 4; ++i)
     {
-        int nx = curx + dx[i];
-        int ny = cury + dy[i];
-        if (curx < 1 || cury < 1 || curx > n || cury > m) continue;
-        if (a[nx][ny] >= a[curx][cury]) continue;
-        dfs(nx, ny, id);
+        int nx = tx + dx[i], ny = ty + dy[i];
+        if (nx < 1 || ny < 1 || nx > r || ny > c || h[nx][ny] >= h[tx][ty]) continue;
+        if (!vis[nx][ny]) check(nx, ny);
+        vis[nx][ny] = true; // 不搜但也要更新答案
+        left[tx][ty] = std::min(left[tx][ty], left[nx][ny]);
+        right[tx][ty] = std::max(right[tx][ty], right[nx][ny]);
     }
 }
 int main() 
@@ -31,31 +22,32 @@ int main()
     freopen("P1514.in", "r", stdin);
     // freopen(".out", "w", stdout);
 #endif
-    priority_queue<pair<int, int> > q;
-    n = rd(); m = rd();
-    for (int i = 1; i <= n; ++i)
-        for (int j = 1; j <= m; ++j)
-            a[i][j] = rd();
-    for (int i = 1; i <= m; ++i) q.push(make_pair(a[1][i], i));
-    while (q.size())
+    /*
+        Reference: https://www.luogu.com.cn/problem/solution/P1514
+        若最终都能灌溉到，则一个水塔能灌溉的绝对是一个区间，dfs 计算其最大的范围
+        --> 若没灌溉到，统计并输出
+        --> 都灌溉到了，转化为区间覆盖问题，可以进行贪心
+        这和 dp 有什么关系啊 = =，为什么有 dp 的标签.....而且我还想不出来怎么做....
+    */
+    memset(left, 0x3f, sizeof(left));
+    scanf("%d %d", &r, &c);
+    for (int i = 1; i <= r; ++i)
+        for (int j = 1; j <= c; ++j)
+            scanf("%d", &h[i][j]);
+    for (int i = 1; i <= c; ++i) left[r][i] = right[r][i] = i;
+    for (int i = 1; i <= c; ++i) check(1, i);
+    if (r != 1) for (int i = 1; i <= c; ++i) ans += !vis[r][i]; // 坑点注意特判
+    if (ans) { printf("0\n%d", ans); return 0; }
+    //  贪心的区间覆盖问题
+    int lptr = 1, rptr = 1;
+    while (lptr <= c)
     {
-        ++cur;
-        dfs(1, q.top().second, cur);
-        q.pop();
-    } 
-    for (int i = 1; i <= n; ++i)
-    {
-        for (int j = 1; j <= m; ++j)
-            cout << f[i][j] << " ";
-        cout << endl;
+        for (int i = 1; i <= c; ++i)
+            if (left[1][i] <= lptr) 
+                rptr = std::max(right[1][i], rptr);
+        lptr = rptr + 1;
+        ans++;
     }
-    int ans = 0, ncnt = 0;
-    for (int i = 1; i <= m; ++i)
-    {
-        if (!f[n][i]) ncnt++;
-        else if (!vis[f[n][i]]) ans++, vis[f[n][i]] = true;
-    }
-    if (ncnt) printf("0\n%d", ncnt);
-    else printf("1\n%d", ans);
+    printf("1\n%d", ans);
     return 0;
 }
